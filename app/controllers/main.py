@@ -1,11 +1,49 @@
-from flask import jsonify, make_response
+import csv
+import re
+from flask import jsonify, make_response, request
 from app import app
 from app.services.youtube_query import youtube_search
+from app.services.google_sheets import google_sheet_insertion
+from app.utils.allowed_files import allowed_file_ext
 
-@app.route('/make-query', methods=['GET'])
+@app.route('/search/channel-summary', methods=['GET','POST'])
 def queryAPI():
-	
-	return make_response(jsonify(youtube_search()), 200)
+	if not check_mimetype(request):
+		return make_response(jsonify({'status':'error', 'message':'Incorrect filetype, application only accepts text/csv filetypes'}))
+	if 'file' in request.files and request.files['file'].filename != '':
+		file = request.files['file']
+		if allowed_file_ext(file.filename,'csv'):
+			responseObj = {}
+			responseObj['status'] = True
+			responseObj['data'] = []
+
+			reader = csv.reader(file)
+
+			for row in reader:
+				if row[0] == 'Queries':
+					continue
+				queryStr = row[0]
+				responseObj['data'].append(youtube_search(queryStr))
+			sheetValues = []
+			count = 0
+			for obj in responseObj['data']:
+				if count == 0:
+					rowData = []
+					count = 1
+					for key in obj:
+						rowData.append(key)
+					sheetValues.append(rowData)	
+				rowData = []
+				for key in obj:
+					rowData.append(obj[key])
+				sheetValues.append(rowData)
+			google_sheet_insertion(sheetValues)
+			return make_response(jsonify(sheetValues), 200)
+		else:
+			return make_response(jsonify({'status':'error','message':'incorrect file type uploaded'}), 400)
+	else:
+		return make_response(jsonify({'status':'error','message':'no file uploaded'}),400)
+
 
 @app.errorhandler(404)
 def not_found(error):
@@ -13,4 +51,7 @@ def not_found(error):
 
 @app.errorhandler(Exception)
 def unhandledException(e):
-	return make_response(jsonify({'error': str(e)}), 500)
+	return make_response(jsonify({'status': False, 'error': str(e)}), 500)
+
+def check_mimetype(request):
+	return 'multipart/form-data' in request.headers['Content-Type']
