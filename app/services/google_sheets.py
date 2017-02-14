@@ -45,14 +45,14 @@ def get_credentials():
         print('Storing credentials to ' + credential_path)
     return credentials
 
-def google_sheet_insertion(values):
+def google_sheet_insertion(values,sheetID):
 	print (values)
 	credentials = get_credentials()
 	http = credentials.authorize(httplib2.Http())
 	discoveryUrl = ('https://sheets.googleapis.com/$discovery/rest?'
                     'version=v4')
 	service = discovery.build('sheets','v4',http=http, discoveryServiceUrl=discoveryUrl)
-	spreadSheet_Id = '17ZZQNoiVqDMLTmOgBRu573ft0T4GyZ3ekRaF54ouZps'
+	spreadSheet_Id = sheetID
 	body = {'values':values}
 	range_name = 'Sheet1!A1'
 	value_input_option = 'USER_ENTERED'
