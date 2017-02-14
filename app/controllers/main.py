@@ -33,10 +33,6 @@ def queryAPI():
 	else:
 		return make_response(jsonify({'status':'error','message':'no file uploaded'}),400)
 
-@app.route('/login', methods=['POST'])
-def admin_login():
-	if()
-
 @app.errorhandler(404)
 def not_found(error):
 	return make_response(jsonify({'error': 'Not found'}), 404)
