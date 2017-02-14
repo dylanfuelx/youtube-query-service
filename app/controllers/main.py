@@ -4,11 +4,7 @@ from flask import jsonify, make_response, request
 from app import app
 from app.services.youtube_query import youtube_search
 from app.services.google_sheets import google_sheet_insertion
-<<<<<<< HEAD
-from app.utils.main import allowed_file_ext, format_data_array
-=======
 from app.utils.main import allowed_file_ext, structure_data
->>>>>>> jason/utils
 
 @app.route('/search/channel-summary', methods=['POST'])
 def queryAPI():
