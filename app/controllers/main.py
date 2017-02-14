@@ -4,7 +4,11 @@ from flask import jsonify, make_response, request
 from app import app
 from app.services.youtube_query import youtube_search
 from app.services.google_sheets import google_sheet_insertion
+<<<<<<< HEAD
 from app.utils.main import allowed_file_ext, format_data_array
+=======
+from app.utils.main import allowed_file_ext, structure_data
+>>>>>>> jason/utils
 
 @app.route('/search/channel-summary', methods=['POST'])
 def queryAPI():
@@ -25,7 +29,7 @@ def queryAPI():
 				queryStr = row[0]
 				responseObj['data'].append(youtube_search(queryStr))
 
-			sheetValues = format_data_array(responseObj['data'])
+			sheetValues = structure_data(responseObj['data'])
 			google_sheet_insertion(sheetValues, g_sheet_id)
 			return make_response(jsonify(sheetValues), 200)
 		else:
