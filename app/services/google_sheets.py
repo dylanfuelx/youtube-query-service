@@ -1,6 +1,7 @@
 from __future__ import print_function
 import httplib2
 import os
+import json
 
 from apiclient import discovery
 from oauth2client import client
@@ -14,8 +15,9 @@ except ImportError:
     flags = None
 
 SCOPES = 'https://www.googleapis.com/auth/spreadsheets'
-CLIENT_SECRET_FILE = os.getcwd() + '/client_secret.json'
+CLIENT_SECRET_FILE = os.getcwd() +  '/client_secret.json'
 APPLICATION_NAME = 'Youtube Search Service'  
+
 
 def get_credentials():
     """Gets valid user credentials from storage.
@@ -26,12 +28,12 @@ def get_credentials():
     Returns:
         Credentials, the obtained credential.
     """
-    home_dir = os.path.expanduser('~')
+    home_dir = os.getcwd()
     credential_dir = os.path.join(home_dir, '.credentials')
     if not os.path.exists(credential_dir):
         os.makedirs(credential_dir)
     credential_path = os.path.join(credential_dir,
-                                   'sheets.googleapis.com-python-quickstart.json')
+                                   'client_secret.json')
 
     store = Storage(credential_path)
     credentials = store.get()
@@ -45,17 +47,13 @@ def get_credentials():
         print('Storing credentials to ' + credential_path)
     return credentials
 
-def google_sheet_insertion(values,sheetID):
-	print (values)
-	credentials = get_credentials()
+def google_sheet_insertion(values,sheetID,credentials):
+	#credentials = get_credentials()
 	http = credentials.authorize(httplib2.Http())
-	discoveryUrl = ('https://sheets.googleapis.com/$discovery/rest?'
-                    'version=v4')
-	service = discovery.build('sheets','v4',http=http, discoveryServiceUrl=discoveryUrl)
+	discoveryUrl = ('https://sheets.googleapis.com/$discovery/rest?version=v4')
+	service = discovery.build('sheets','v4',http=http,discoveryServiceUrl=discoveryUrl)
 	spreadSheet_Id = sheetID
 	body = {'values':values}
 	range_name = 'Sheet1!A1'
 	value_input_option = 'USER_ENTERED'
-
-
 	result = service.spreadsheets().values().update(spreadsheetId=spreadSheet_Id, range=range_name, valueInputOption=value_input_option, body=body).execute()
