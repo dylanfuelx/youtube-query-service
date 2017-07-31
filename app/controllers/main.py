@@ -23,7 +23,7 @@ def queryAPI():
 			session['sheetID'] = g_sheet_id
 			file = request.files['file']
 			if allowed_file_ext(file.filename,'csv'):
-				file.save('/home/youtube-query-service/upload/tmp_file.csv')
+				file.save('../youtube-query-service/upload/tmp_file.csv')
 				if 'credentials' not in session:
 					return redirect(url_for('oauth2callback'))
 				credentials = client.OAuth2Credentials.from_json(session['credentials'])
