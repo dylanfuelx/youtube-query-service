@@ -45,7 +45,8 @@ def youtube_search(query):
 		channelId=channel['channel_id'],
 		order='viewCount',
 		type='video',
-		maxResults=5
+		maxResults=5,
+		videoDuration='short'
 	).execute()
 
 	videoResultArray = video_response['items']
