@@ -76,7 +76,7 @@ def youtube_search(query):
 		channel[videoNum + '_title'] = video['snippet']['title']
 		channel[videoNum + '_description'] = video['snippet']['description']
 		channel[videoNum + '_viewCount'] = videoIdResultArray["statistics"]['viewCount']
-		channel[videoNum + '_duration'] = videoDuration
+		channel[videoNum + '_duration (seconds)'] = int(videoDuration[2:4])
 
 		if 'commentCount' in videoIdResultArray["statistics"]:
 			channel[videoNum + '_commentCount'] = videoIdResultArray["statistics"]['commentCount'] 
