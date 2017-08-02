@@ -4,3 +4,4 @@
 app/.DS_Store
 app/services/.DS_Store
 venv/
+*.pyc
