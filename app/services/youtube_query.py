@@ -45,13 +45,15 @@ def youtube_search(query):
 		channelId=channel['channel_id'],
 		order='viewCount',
 		type='video',
-		maxResults=5,
+		maxResults=15,
 		videoDuration='short'
 	).execute()
 
 	videoResultArray = video_response['items']
 	count = 1
 	for video in videoResultArray:
+		if count > 5:
+			continue
 
 		videoNum = 'video' + str(count)
 
