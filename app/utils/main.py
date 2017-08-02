@@ -45,10 +45,11 @@ def structure_data(dataArray):
 	count = 0
 	for obj in dataArray:
 		if count == 0:
-			resultArray.append(intial_row)	
+			columnHeaders = sorted(obj.keys())
+			resultArray.append(columnHeaders)	
 			count = 1
 		rowData = []
-		for key in intial_row:
+		for key in columnHeaders:
 			if key in obj:
 				rowData.append(obj[key])
 			else:
