@@ -52,19 +52,22 @@ def youtube_search(query):
 	videoResultArray = video_response['items']
 	count = 1
 	for video in videoResultArray:
+
 		videoNum = 'video' + str(count)
+
+		videoid_response = youtube.videos().list(
+			part='statistics',
+			id=video['id']['videoId']
+		).execute()
+
+		videoIdResultArray = videoid_response['items']
+
 		channel[videoNum + '_url'] = "https://www.youtube.com/watch?v={}".format(video['id']['videoId'])
 		channel[videoNum] = video['id']['videoId']
 		channel[videoNum + '_title'] = video['snippet']['title']
 		channel[videoNum + '_description'] = video['snippet']['description']
 
 
-		videoid_response = youtube.videos().list(
-			part='statistics',
-			id=channel[videoNum]
-		).execute()
-
-		videoIdResultArray = videoid_response['items']
 
 		channel[videoNum + '_viewCount'] = videoIdResultArray[0]["statistics"]['viewCount']
 		if 'commentCount' in videoIdResultArray[0]["statistics"]:
