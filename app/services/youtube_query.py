@@ -61,13 +61,20 @@ def youtube_search(query):
 		).execute()
 
 		videoIdResultArray = videoid_response['items'][0]
+		videoDuration = videoIdResultArray['contentDetails']['duration']
+
+		# Video duration has an odd format from Youtube: PT#H#M#S
+		# If the video is less than 1 minute in length, this becomes: PT#S
+
+		if len(videoDuration) > 5:
+			continue
 
 		channel[videoNum + '_url'] = "https://www.youtube.com/watch?v={}".format(video['id']['videoId'])
 		channel[videoNum] = video['id']['videoId']
 		channel[videoNum + '_title'] = video['snippet']['title']
 		channel[videoNum + '_description'] = video['snippet']['description']
 		channel[videoNum + '_viewCount'] = videoIdResultArray["statistics"]['viewCount']
-		channel[videoNum + '_duration'] = videoIdResultArray['contentDetails']['duration']
+		channel[videoNum + '_duration'] = videoDuration
 
 		if 'commentCount' in videoIdResultArray["statistics"]:
 			channel[videoNum + '_commentCount'] = videoIdResultArray["statistics"]['commentCount'] 
