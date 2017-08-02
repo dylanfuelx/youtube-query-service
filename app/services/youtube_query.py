@@ -52,25 +52,26 @@ def youtube_search(query):
 	videoResultArray = video_response['items']
 	count = 1
 	for video in videoResultArray:
-		channel['video' + str(count) + '_url'] = "https://www.youtube.com/watch?v={}".format(video['id']['videoId'])
-		channel['video' + str(count)] = video['id']['videoId']
-		channel['video' + str(count) + '_title'] = video['snippet']['title']
-		channel['video' + str(count) + '_description'] = video['snippet']['description']
+		videoNum = 'video' + str(count)
+		channel[videoNum + '_url'] = "https://www.youtube.com/watch?v={}".format(video['id']['videoId'])
+		channel[videoNum] = video['id']['videoId']
+		channel[videoNum + '_title'] = video['snippet']['title']
+		channel[videoNum + '_description'] = video['snippet']['description']
 
 
 		videoid_response = youtube.videos().list(
 			part='statistics',
-			id=channel['video' + str(count)]
+			id=channel[videoNum]
 		).execute()
 
 		videoIdResultArray = videoid_response['items']
 
-		channel['video' + str(count) + '_viewCount'] = videoIdResultArray[0]["statistics"]['viewCount']
+		channel[videoNum + '_viewCount'] = videoIdResultArray[0]["statistics"]['viewCount']
 		if 'commentCount' in videoIdResultArray[0]["statistics"]:
-			channel['video' + str(count) + '_commentCount'] = videoIdResultArray[0]["statistics"]['commentCount'] 
+			channel[videoNum + '_commentCount'] = videoIdResultArray[0]["statistics"]['commentCount'] 
 		else:
-			channel['video' + str(count) + '_commentCount'] = 0
-		#channel['video' + str(count) + 'likeCount'] = videoIdResultArray[0]["statistics"]['likeCount']
+			channel[videoNum + '_commentCount'] = 0
+		#channel[videoNum + 'likeCount'] = videoIdResultArray[0]["statistics"]['likeCount']
 
 		count += 1
 
