@@ -33,7 +33,7 @@ def queryAPI():
 					with open(os.getcwd() + '/upload' + '/tmp_file.csv','rb') as csvfile:
 						reader = csv.reader(csvfile)
 						for row in reader:
-							if row[0] == 'Queries':
+							if row[0] == 'Company':
 								continue
 							queryStr = row[0]
 							responseObj['data'].append(youtube_search(queryStr))
