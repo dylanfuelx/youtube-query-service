@@ -75,6 +75,7 @@ def youtube_search(query):
 		channel[videoNum] = video['id']['videoId']
 		channel[videoNum + '_title'] = video['snippet']['title']
 		channel[videoNum + '_description'] = video['snippet']['description']
+		channel[videoNum + '_published_at'] = video['snippet']['publishedAt']
 		channel[videoNum + '_viewCount'] = videoIdResultArray["statistics"]['viewCount']
 		channel[videoNum + '_duration (seconds)'] = int(videoDuration[2:4])
 
