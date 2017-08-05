@@ -15,3 +15,10 @@ Using the App:
 For development - Run the app in debug mode via dev-run.py (python dev-run.py)
 
 For production - The entrypoint into the app will be wsgi.py
+
+
+Credentials for running locally:
+
+Enable the YouTube and Google Sheets API's via Google's Dev console. Then download the client_secret.json and replace the version in this repo with your fancy new keys.
+
+You will also need to replace the YouTube API key in services/youtube_query.py with an API key you make in the Google console as well.
