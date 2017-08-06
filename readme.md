@@ -1,6 +1,6 @@
-#Everything you need to know about the Youtube Query Serivce
+# Everything you need to know about the Youtube Query Serivce
 
-##Setting up developer environment:
+## Setting up developer environment:
 
 This is a Python flask app, so first things first, you will need to get your pip on!
 
@@ -20,7 +20,7 @@ $ . venv/bin/activate
 $ pip install Flask
 ```
 
-##Installing dependancies
+## Installing dependancies
 
 Once you have your virtual environment set up and flask installed, two more modules need to be pip installed: Google API Client for Python and the python Oauth2Client.
 
@@ -32,14 +32,14 @@ $ pip install --upgrade oauth2client
 $ pip install flask_cors
 ```
 
-##Using the App:
+## Using the App:
 
 For development - Run the app in debug mode via dev-run.py (`python dev-run.py`)
 
 For production - The entrypoint into the app will be wsgi.py
 
 
-##Credentials for running localy:
+## Credentials for running localy:
 
 Enable the YouTube and Google Sheets API's via Google's Dev console. Then download the client_secret.json and replace the version in this repo with your fancy new keys.
 
