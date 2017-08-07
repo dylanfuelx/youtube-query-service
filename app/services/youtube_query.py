@@ -44,6 +44,7 @@ def youtube_search(query):
 
 	# Second Youtube query pulls down a list of videos for a given channel.
 	# For whatever reason, the video list does not contain the meta data for the videos returned.
+	# the API's videoDuration filter only takes three parameters, and, at the shortest, filter videos < 4 min
 
 	video_response = youtube.search().list(
 		part='snippet',
