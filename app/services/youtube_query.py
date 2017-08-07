@@ -13,6 +13,8 @@ def youtube_search(query):
 	# Call the search.list method to retrieve results matching the specified
 	# query term.
 
+	# This first call to youtube brings back details about the channel matching the company name being queried
+
 	channel = {}
 	search_response = youtube.search().list(
 		q=query,
@@ -40,6 +42,9 @@ def youtube_search(query):
 	channel['channel_subCount'] = channelResultArray[0]['statistics']['subscriberCount']
 	channel['channel_videoCount'] = channelResultArray[0]['statistics']['videoCount']
 
+	# Second Youtube query pulls down a list of videos for a given channel.
+	# For whatever reason, the video list does not contain the meta data for the videos returned.
+
 	video_response = youtube.search().list(
 		part='snippet',
 		channelId=channel['channel_id'],
@@ -56,6 +61,8 @@ def youtube_search(query):
 			continue
 
 		videoNum = 'video' + str(count)
+
+		# Here's where we finally get the specific data for each video
 
 		videoid_response = youtube.videos().list(
 			part='statistics,contentDetails',
