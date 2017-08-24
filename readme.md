@@ -44,3 +44,15 @@ For production - The entrypoint into the app will be wsgi.py
 Enable the YouTube and Google Sheets API's via Google's Dev console. Then download the client_secret.json and replace the version in this repo with your fancy new keys.
 
 You will also need to replace the YouTube API key in services/youtube_query.py with an API key you make in the Google console as well.
+
+## Running on VM
+
+### Updating Write access for the temp file
+
+After getting the app up and running, you will need to change the access to the upload/tmp_file.csv file as follows:
+`sudo chmod 777 upload/tmp_file.csv`
+
+### Restarting the service
+
+The server is set up to run the python script as a service. To restart the python script after an update, run:
+`sudo service youtube-query-service restart`
